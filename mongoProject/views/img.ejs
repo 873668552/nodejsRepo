@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form id="upload" enctype="multipart/form-data" method="post"> 
+        <input type="file" name="file" id="pic"/> 
+        <input type="button" value="提交" onclick="uploadPic();"/> 
+        <span class="showUrl"></span> 
+        <img src="" class="showPic" alt=""> 
+    </form> 
+    <script src="/javascripts/jquery.js"></script>
+    <script>
+        function uploadPic() { 
+            console.log($('#upload'));
+            var form = document.getElementById('upload'), 
+                formData = new FormData(form); 
+            $.ajax({ 
+            // url:"https://localhost:3000/img", 
+            url:'/img',
+            type:"post", 
+            data:formData, 
+            processData:false, 
+            contentType:false, 
+            success:function(res){ 
+                
+            }, 
+            error:function(err){ 
+                alert("网络连接失败,稍后重试",err); 
+            } 
+            }) 
+        } 
+    </script>
+</body>
+</html>

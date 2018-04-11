@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/css/test.min.css' />
+</head>
+<body>
+    <!-- <ul>
+        <% if(arr){ %>
+            <% for(var i = 0,len = arr.length; i < len; i++){ %>
+                <li>
+                    <div>
+                        <img src="" alt="">
+                        <div></div>
+                    </div>
+                </li>
+            <% } %>
+        <% } %>
+    </ul> -->
+    <!-- <% if(arr){ %>
+        <% for(var i = 0,len = arr.length; i < len; i++){ %>
+            <li> <%= arr[i] %> </li>
+       <% } %>
+    <% } %> -->
+    <ul class="con_ul">
+        
+    </ul>
+    <div class="btn_div">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+    <a href="localhost:3000/admin/tuniu">途牛</a>
+</body>
+<!-- 引入jq模块 -->
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    class Pageton{
+        constructor(url,dom_div){
+            this.url = url;
+            this.dom_div = dom_div;
+            this.option = {
+                url:this.url,
+                type:'post',
+                data:{
+                    page:0
+                },
+                dataType:'json'
+            }
+        }
+        init(){
+            // 1  第一次加载数据
+            this.load_data();
+            // 2 点击事件
+            this.btn_load();
+        }
+        // 点击事件
+        btn_load(){
+            var that = this;
+            this.dom_div.on('click',function(){
+                that.option.data.page = $(this).index();
+                that.load_data();
+            })
+        }
+        // 加载事件
+        load_data(){
+            $.ajax(this.option)
+            .done(this.render_page  )
+        }
+        // 处理服务器响应数据
+        render_page(res){
+            if(res.length == 0) return 0;
+            let html = '';
+            console.log(res);
+            res.forEach(function(val){
+                html += `
+                <li>
+                    <h3>${val.title}</h3>
+                    <img src=" ${ val.image } " alt="">
+                    <span tar = "${val.title}" id="dele_span">删除</span>
+                    <span tar = "${val.title} id="hide_span" >收藏</span>
+                </li>
+                `
+            })
+            $('.con_ul').html(html);
+        }
+    }
+    // 
+    new Pageton('/admin/pagetion',$('.btn_div>span')).init();
+</script>
+</html>

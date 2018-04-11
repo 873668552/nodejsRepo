@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+</head>
+<body>
+    <!-- <form id="test_form" enctype="multipart/form-data">
+        <input id="fileInp" type="file">
+        <button id="fileBtn">确定</button>
+    </form> -->
+    <!-- <form id="test_form" enctype="multipart/form-data" method="POST">
+        <input id="fileInp" type="file">
+        <button id="fileBtn">确定</button>
+    </form> -->
+    <!-- <form id="test_form" enctype="multipart/form-data" method="post"> 
+        <input type="file" name="file" id="pic"/> 
+        <input id="fileBtn" type="button" value="提交"/> 
+    </form> -->
+    <form id="upload"  > 
+        <input type="file" name="file" id="pic"/> 
+        <input id="btn" type="button" value="提交"/> 
+        <span class="showUrl"></span> 
+        <img src="" class="showPic" alt=""> 
+    </form>
+</body>
+<script src="javascripts/jquery.js"></script>
+<script>
+
+   
+
+    // 1 ajax请求
+    document.getElementById('btn').onclick = ()=>{
+         // 2 初始化post数据
+        var formtab = document.getElementById('upload'),
+        formData = new FormData(formtab);
+        console.log(formData)
+        $.ajax({
+            url:'/test',
+            type:'post',
+            data:formData,
+            processData:false,
+            contentType:false
+        }).then(succ,faild)
+    }
+    // btn.onclick = ()=>{
+    //     var form = document.getElementById('upload'), 
+    //         formData = new FormData(form); 
+    //         formData.append("username", localStorage.getItem('admin'));
+    //         $.ajax({ 
+    //         url:'/test',
+    //         type:"post", 
+    //         data:formData, 
+    //         processData:false, 
+    //         contentType:false, 
+    //     }).then(succ,faild)
+    // }
+    // 3 处理后端返回结果
+    var succ = (res)=>{
+        console.log(res);
+    }   
+    var faild = (res)=>{
+        console.log(res);
+    }
+
+</script>
+</html>

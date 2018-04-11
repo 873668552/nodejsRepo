@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/css/index.min.css' />
+    <script src="/javascripts/viewStyle/cookie.js"></script>
+  </head>
+  <body>
+    
+    <% if(token){ %>
+    <button id="showBtn">管理员</button>
+    <h1><%= token %></h1>
+    <p>欢迎<%= token %>来到午夜dj </p>
+    <button id="loginout">注销</button>
+    <div id="admin_p" style="display:none">
+      <p><label for="">用户</label><input id="user" type="text"></p>
+      <p><label for="">密码</label><input id="password" type="text"></p>
+      <button id="admin_btn">超级账户登录</button>
+    </div>
+    
+    <%  } else{ %>
+    <h1><%= title %></h1>
+    <a href="/login">登录</a>
+    <a href="/reg">注册</a>
+    <% }%>
+  </body>
+  <script src="javascripts/jquery.js"></script>
+  <script>
+    $('#loginout').on('click',confirm);
+    
+    // 1 注销按钮
+    function confirm(){
+      $('#showBtn').fadeOut();
+      $.ajax({
+        url:'/confirm',
+        type:'GET'
+      }).done( function(res){
+        if(res == 'ok'){
+          // 删除cookie
+          removeCookie('token');
+          location.href = '/';
+        }else{
+          alert('出错了');
+        }
+      } )
+    }
+    // 超级用户登录
+    $('#admin_btn').on('click',()=>{
+      // 1 前端传值
+      $.ajax({
+        url:'/manage',
+        type:'POST',
+        data:{
+          username:$('#user').val(),
+          password:$('#password').val()
+        }
+      })
+      .done(succ)
+    })
+    function succ(res){
+      switch(res){
+          case 'noAdmin':console.log('noadmin'); alert('没有这个用户');break;
+          case '1': console.log(111111111); alert('密码错误');break;
+          case 'ok':alert('ok'); 
+          setTimeout(function(){
+            location.href = 'http://localhost:3000/system?admin=' + $('#user').val();
+          },1000)
+          ;break;
+        }
+    }
+
+
+    
+    var flag = true;
+    $('#showBtn').on('click',function(){
+      if(flag){
+        $('#admin_p').stop().fadeIn()
+        $(this).html('关闭登录')
+        flag = false;
+      }else{
+        $('#admin_p').stop().fadeOut()
+        $(this).html('管理员')
+        flag = true;
+      }
+    })
+  </script>
+</html>

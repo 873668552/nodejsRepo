@@ -1,0 +1,172 @@
+@mixin addWh($w:0,$h:0,$bg:0,$magin:0,$overflow:0){
+    @if($w != 0){
+        width: #{$w}px;
+    }
+    @if($h != 0){
+        height: #{$h}px;
+    }
+    @if($bg != 0){
+        background: $bg;
+    }
+    @if($magin != 0){
+        margin: $magin;
+    }
+    @if($overflow != 0){
+        overflow: hidden;
+    }
+}
+@mixin addFont($line:0,$text:0,$font:0,$color:0,$bord:0){
+    @if($line!=0){
+        line-height: #{$line}px;
+    }
+    @if($text != 0){
+        text-align: $text;
+    }
+    @if($font!=0){
+        font-size: #{$font}px;
+    }
+    @if($color!=0){
+        color: $color
+    }
+    @if($bord!=0){
+        font-weight: $bord
+    }
+}
+@mixin addPosi($top:0,$botton:0,$left:0,$right:0){
+    @if($top != 0){top: #{$top}px;}
+    @if($botton != 0){bottom: #{$botton}px;}
+    @if($left != 0){left:  #{$left}px;}
+    @if($right != 0){right: #{$right}px;}
+}
+// //////////////////////////////////////////
+body,h1,h3,h2,h4,h5,h6,p,dl,dd,ul,li,ol,td,form,input,fieldset,legend{margin:0; padding:0;}
+li{list-style:none;}
+a{text-decoration:none; font-size:12px; }
+body{font-size:14px; font-family:"微软雅黑"; color:#666; background:#fff;}
+img{border:none;}
+a,input{outline:none;}
+em,i{font-style:normal;}
+b,strong,h1,h2,h3,h4,h5,h6{font-weight:normal;}
+.clear:after{content:""; display:block; clear:both; height:0; visibility:hidden;}
+table{border-collapse:collapse;}
+
+// 布局
+// topDiv 
+#topDiv{
+   @include addWh(1190, 120, #5b483a, 0 auto, 1);
+   >img{
+       display: block;
+       float: left;
+       @include addWh(80, 80,0,10px auto auto 20px);
+   }
+   >h1{
+       padding-top: 30px;
+       @include addWh(888, 60, 0, 0, 1);
+       @include addFont(60,center,30,white,300);
+   }
+   >div{
+        float: right;
+        border: 1px solid white;
+        cursor: pointer;
+        @include addFont(30,center,20,white);
+        @include addWh(80, 30, 0,45px 45px auto auto);
+   }
+   >ul{
+        cursor: pointer;
+        float: right;
+        @include addFont(30,center,30,white);
+        @include addWh(30, 30,0,36px 30px auto auto);
+   }
+}
+// middleDiv midLeft midRight bfc布局
+#middleDiv{
+    @include addWh(1190, 0, 0,0 auto,1);
+    .midLeft{
+        float: left;
+        @include addWh(300, 350, 0,0,0);
+        // 操作界面
+        .info_ul{
+            padding-top: 30px;
+            overflow: hidden;
+            >li{
+                padding: 20px 0 0 20px;
+                overflow: hidden;
+                background:url(/images/jia.jpg) no-repeat left 22px;
+                cursor: pointer;
+                @include addFont(0, left, 16, black, 900);
+                >ol{
+                    padding-left: 20px;
+                    display: none;
+                    >li{
+                        @include addWh(200,30);
+                        @include addFont(30, left, 15, black, 600);
+                    }
+                }
+            }
+        }
+    }
+    .midRight{
+        @include addWh(0, 0, blue,0,1);
+        min-height: 350px;
+        >div:nth-child(1){
+            @include addWh(0, 0, pink,0,1);
+            >ul{@extend .clear;}
+            >ul>li{
+                float: left;
+                height: 70px;
+                margin: 5px;
+                @include addFont(70, center, 12, black, 600);
+                >img{
+                    display: block;
+                    @include addWh(60, 70);
+                    padding: 0 10px;
+                }
+            }
+            >ul>li:nth-of-type(n+2){
+                width: 188px;
+            }
+            >ul>#dele_span{cursor: pointer;}
+        }
+        >div:nth-child(2){
+            @include addWh(0, 50, orange,0,1);
+            >span{
+                padding: 10px;
+                cursor: pointer;
+                @include addFont(30,center,12,black,900)
+            }
+            @for $i from 1 to 5{
+                @if($i == 1){
+                    >span:nth-of-type(#{$i}){
+                        margin-left: 688px;
+                    }
+                }
+            }
+        }
+        >button{margin-left: 100px;}
+        // >ul{
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        // }
+        // >div{
+        //     position: absolute;
+        // }
+        // @for $i from 1 to 5 {
+        //     >div:nth-of-type(#{$i}){
+        //         @if($i == 1){
+        //             @include addPosi(0,10,100,0);
+        //         }
+        //         @if($i == 2){
+        //             @include addPosi(0,10,100,0);
+        //         }
+        //         @if($i == 3){
+        //             @include addPosi(0,10,100,0);
+        //         }
+        //         @if($i == 4){
+        //             @include addPosi(0,10,100,0);
+        //         }
+        //     }
+        // }
+    }
+}
+// footer

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title%></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+</head>
+<body>
+    
+    <form role="form" class="col-md-6 col-md-offset-3" >
+        <div class="form-group">
+            <label for="name">账号</label>
+            <input type="text" class="form-control" id="uername" placeholder="请输入账号">
+        </div>
+        <div class="form-group">
+            <label for="name" >密码</label>
+            <input type="text" class="form-control" id="password" placeholder="请输入密码">
+        </div>
+        <button type="submit" id="regBtn" class="btn btn-default" onclick="return false">注册</button>
+    </form>
+  
+</body>
+<script src="javascripts/jquery.js"></script>
+<script>
+    $('#regBtn').on( 'click', reg);
+
+    // 1
+    function reg(){
+        $.ajax({
+            url:'reg/confirm',
+            type:'POST',
+            data:{
+                uer:$('#uername').val(),
+                password:$('#password').val()
+            },
+            dataType:'json'
+        }).then(succ,faild)
+    }
+
+    function succ(res){
+        switch(res){
+            case 0:alert('数据库错误');break;
+            case 1:alert('用户存在');break;
+            case 123:alert('用户名为空');break;
+            case 888 : 
+            console.log(res);
+            $('#submit').html('恭喜注册成功，3秒跳转登录')
+            setTimeout( ()=>{
+                location.href = '/login'
+            },3000 );
+        }
+    }
+    function faild(){
+        alert('服务器维护中。。。');
+    }
+</script>
+</html>

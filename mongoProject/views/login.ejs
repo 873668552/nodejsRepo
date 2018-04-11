@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  </head>
+  <body>
+      <form role="form" class="col-md-offset-3 col-md-6">
+        <div class="form-group">
+          <label for="name">账户</label>
+          <input type="text" class="form-control" id="username" placeholder="请输入账户">
+        </div>
+        <div class="form-group">
+            <label for="name">密码</label>
+            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input id="loginCheck" type="checkbox">15天登录
+          </label>
+        </div>
+        <button type="submit" id="submit" class="btn btn-default" onclick="return false">提交</button>
+      </form> 
+  </body>
+  <script src="javascripts/jquery.js"></script>
+  <script>
+      $('#submit').on( 'click', login)
+      // 登录逻辑
+      function login(){
+        $.ajax({
+          data:{
+            username:$('#username').val(),
+            password:$('#password').val(),
+            token:$('#loginCheck').is(":checked")
+          },
+          type:'POST',
+          url:'login/confirm',
+          dataType:'json'
+        })
+        .then( succ, failed )
+      }
+      function succ(res){
+        
+        switch(res.state){
+          case 'ok1':location.href = '/untoken?name=' + $('#username').val()+"#123456"; break;
+          case 'ok':location.href = '/'; break;
+          case 'no':alert('登录验证失败'); break;
+          case 'noData':alert('密码验证失败'); break;
+        }
+      }
+      
+      function failed(){
+        console.log('出错了');
+      }
+  </script>
+</html>

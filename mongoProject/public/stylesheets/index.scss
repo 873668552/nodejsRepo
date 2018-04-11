@@ -1,0 +1,36 @@
+@mixin addWh($w:0,$h:0,$bg:0){
+    @if($w != 0){width: #{$w}px;}
+    @if($h != 0){height: #{$h}px;}
+    @if($bg != 0){background: $bg}
+}
+
+#admin_p>p{
+    @include addWh(300);
+    overflow: hidden;
+    >label{
+        display: inline-block;
+        @include addWh(50,30);
+    }
+    >input{
+        display: inline-block;
+        @include addWh(150,20);
+    }
+}
+body{
+    position: relative;
+}
+#showBtn{
+    // display: absolute;
+    display: block;
+    position: absolute;
+    @include addWh(100,30px);
+    right: 0;
+    top: 30px;
+}
+#loginout{
+    position: absolute;
+    display: block;
+    @include addWh(100,30px);
+    right: 110px;
+    top: 30px;
+}
